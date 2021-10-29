@@ -14,6 +14,10 @@ def main(session):
     This is the basic schedule dialog.
     """
     tts = session.service("ALTextToSpeech")
+    
+    # set boring params
+    tts.setParameter("pitchShift", 0)
+    tts.setParameter("pitchShift", 0.65)
 
     # The robot shares the daily schedule
     tts.say("I am the NAO robot. Here is your schedule for the day.")
@@ -31,6 +35,7 @@ def main(session):
     tts.say("Next Nurse Blain will check in on you.")
     tts.say("Finally after that it is bedtime.")
 
+    tts.setParameter("pitchShift", 0)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
