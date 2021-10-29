@@ -15,8 +15,15 @@ def main(session):
     """
     tts = session.service("ALTextToSpeech")
 
+    # set fun params
+    tts.setParameter("pitchShift", 0)
+    tts.setParameter("pitchShift", 1.2)
+
+    # enable gestures
+    tts = session.service("ALAnimatedSpeech")
+
     # The robot shares the daily schedule
-    tts.say("Good morning! I am your friend the NAO robot. Here is your schedule for the day.")
+    tts.say("^start(animations/Stand/Gesture/Enthusiastic_4) Good morning! I am your friend the NAO robot. Here is your schedule for the day. ^stop(animations/Stand/Gesture/Enthusiastic_4)")
     tts.say("First you will have breakfast. The menu is eggs, bacon, pancakes, and orange juice. Eggcellent!")
     tts.say("Next it is time to take your medication.")
     tts.say("After that Nurse Jenny will check in on you. She is nice!")
@@ -31,6 +38,7 @@ def main(session):
     tts.say("Next Nurse Blain will check in on you. He is my favorite!")
     tts.say("Finally after that it is bedtime. Goodnight! Dont let the bed bugs bite! If they do, hit them with a shoe, until theyre black and blue!")
 
+    tts.setParameter("pitchShift", 0)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
