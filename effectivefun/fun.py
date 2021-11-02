@@ -7,24 +7,20 @@ import qi
 import argparse
 import sys
 import time
+from naoqi import ALProxy
 
 
-def main(session):
+def main(robotIP, PORT=9559):
     """
     This is the basic schedule dialog.
     """
-    tts = session.service("ALTextToSpeech")
-
-    # set fun params
-    tts.setParameter("pitchShift", 0)
-    tts.setParameter("pitchShift", 1.2)
-
+    tts = ALProxy("ALAnimatedSpeech", robotIP, PORT)
     # enable gestures
-    tts = session.service("ALAnimatedSpeech")
+    # tts = session.service("ALAnimatedSpeech")
 
     # The robot shares the daily schedule
-    tts.say("^start(animations/Stand/Gesture/Enthusiastic_4) Good morning! I am your friend the NAO robot. Here is your schedule for the day. ^stop(animations/Stand/Gesture/Enthusiastic_4)")
-    tts.say("First you will have breakfast. The menu is eggs, bacon, pancakes, and orange juice. Eggcellent!")
+    tts.say("^start(animations/Stand/Gestures/Hey_1) Good morning! I am your friend the NAO robot. ^wait(animations/Stand/Gestures/Hey_1) Here is your schedule for the day.")
+    tts.say("First you t. The menu is eggs, bacon, pancakes, and orange juice. Eggcellent!")
     tts.say("Next it is time to take your medication.")
     tts.say("After that Nurse Jenny will check in on you. She is nice!")
     tts.say("Next is play time and you can choose to go to the game room, or the library. Why do ghosts like to visit the library? They go through the books very quickly!")
@@ -48,11 +44,4 @@ if __name__ == "__main__":
                         help="Naoqi port number")
 
     args = parser.parse_args()
-    session = qi.Session()
-    try:
-        session.connect("tcp://" + args.ip + ":" + str(args.port))
-    except RuntimeError:
-        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
-               "Please check your script arguments. Run with -h option for help.")
-        sys.exit(1)
-    main(session)
+    main(args.ip, args.port)
