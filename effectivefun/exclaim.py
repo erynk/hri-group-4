@@ -14,21 +14,21 @@ def main(robotIP, PORT=9559):
     This is the basic schedule dialog.
     """
     animated = ALProxy("ALAnimatedSpeech", robotIP, PORT)
-    tts = ALProxy("ALTextToSpeech", robotIP, PO)
+    configuration = {"bodyLanguageMode":"disabled"}    
 
     # The robot shares the daily schedule
-    tts.say(" Good morning! I am the NAO robot. Here is your schedule for the day. ")
+    animated.say(" Good morning! I am the NAO robot. Here is your schedule for the day. ", configuration)
     animated.say("^start(animations/Stand/Gestures/Explain_2) First you will have breakfast. The menu is eggs, bacon, pancakes, and orange juice. Yay! Pancakes! ^stop(animations/Stand/Gestures/Explain_2)")
-    tts.say(" Next it is time to take your medication.")
+    animated.say(" Next it is time to take your medication.", configuration)
     animated.say("^start(animations/Stand/Gestures/Explain_3) After that Nurse Jenny will check in on you. She is nice! ^stop(animations/Stand/Gestures/Explain_3)")
-    tts.say("  Next is play time and you can choose to go to the game room, or the library. Fun! ")
+    animated.say("  Next is play time and you can choose to go to the game room, or the library. Fun! ", configuration)
     animated.say("^start(animations/Stand/Gestures/Explain_2) After that is Lunch. The menu is Mac n cheese, apple sauce, and milk. Tasty! ^stop(animations/Stand/Gestures/Explain_2)")
-    tts.say(" Next it will be time to do your school work. ")
-    tts.say(" After that you will get a visit from your brother. Yipee! ")
-    tts.say(" Next it is time to get a CT scan of your lungs. ")
+    animated.say(" Next it will be time to do your school work. ", configuration)
+    animated.say(" After that you will get a visit from your brother. Yipee! ", configuration)
+    animated.say(" Next it is time to get a CT scan of your lungs. ", configuration)
     animated.say("^start(animations/Stand/Gestures/Explain_3) After that Dr. Jones will come check up on you. She is the best! ^stop(animations/Stand/Gestures/Explain_3)")
     animated.say("^start(animations/Stand/Gestures/Explain_2) Next it is dinner time. The menu is chicken nuggets, sweet potato fries, ketchup, broccoliand kool aid. Yum! ^stop(animations/Stand/Gestures/Explain_2)")
-    tts.say(" After that it is time to take your medication ")
+    animated.say(" After that it is time to take your medication ", configuration)
     animated.say("^start(animations/Stand/Gestures/Explain_2) Next Nurse Blain will check in on you. He is my favorite! ^stop(animations/Stand/Gestures/Explain_2)")
     animated.say("^start(animations/Stand/Gestures/Explain_3) Finally after that it is bedtime. Goodnight! ^stop(animations/Stand/Gestures/Explain_3)")
 
