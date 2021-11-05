@@ -19,14 +19,15 @@ def main(robotIP, PORT=9559):
     # tts = session.service("ALAnimatedSpeech")
 
     # The robot shares the daily schedule
-    tts.say("^start(animations/Stand/Gestures/Enthusiastic_4) Enthusiastic 4. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Enthusiastic_4)")
-    tts.say("^start(animations/Stand/Gestures/Enthusiastic_5) Enthusiastic 5. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Enthusiastic_5)")
-    tts.say("^start(animations/Stand/Gestures/Explain_1) Explain 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_1)")
-    tts.say("^start(animations/Stand/Gestures/Explain_2) Explain 2. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_2)")
-    tts.say("^start(animations/Stand/Gestures/Explain_3) Explain 3. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_3)")
-    tts.say("^start(animations/Stand/Gestures/Please_1) Please 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Please_1)")
-    tts.say("^start(animations/Stand/Gestures/You_1) You 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/You_1)")
-    tts.say("^start(animations/Stand/Gestures/BodyTalk_1) Body Talk 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/BodyTalk_1)")
+    # tts.say("^start(animations/Stand/Gestures/Enthusiastic_4) Enthusiastic 4. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Enthusiastic_4)")
+    # tts.say("^start(animations/Stand/Gestures/Enthusiastic_5) Enthusiastic 5. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Enthusiastic_5)")
+    # tts.say("^start(animations/Stand/Gestures/Explain_1) Explain 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_1)")
+    # tts.say("^start(animations/Stand/Gestures/Explain_2) Explain 2. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_2)")
+    # tts.say("^start(animations/Stand/Gestures/Explain_3) Explain 3. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Explain_3)")
+    # tts.say("^start(animations/Stand/Gestures/Please_1) Please 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/Please_1)")
+    # tts.say("^start(animations/Stand/Gestures/You_1) You 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/You_1)")
+    # tts.say("^start(animations/Stand/Gestures/BodyTalk_1) Body Talk 1. The quick brown fox jumps over the lazy dog. ^wait(animations/Stand/Gestures/BodyTalk_1)")
+    tts.say("")
 
     tts.setParameter("pitchShift", 0)
 

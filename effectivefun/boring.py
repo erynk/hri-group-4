@@ -7,13 +7,14 @@ import qi
 import argparse
 import sys
 import time
+from naoqi import ALProxy
 
-
-def main(session):
+def main(robotIP, PORT=9559):
     """
     This is the basic schedule dialog.
     """
-    tts = session.service("ALTextToSpeech")
+    # tts = session.service("ALTextToSpeech")
+    tts = ALProxy("ALTextToSpeech", robotIP, PORT)
     
     # set boring params
     tts.setParameter("pitchShift", 0)
@@ -45,11 +46,4 @@ if __name__ == "__main__":
                         help="Naoqi port number")
 
     args = parser.parse_args()
-    session = qi.Session()
-    try:
-        session.connect("tcp://" + args.ip + ":" + str(args.port))
-    except RuntimeError:
-        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
-               "Please check your script arguments. Run with -h option for help.")
-        sys.exit(1)
-    main(session)
+    main(args.ip, args.port)
