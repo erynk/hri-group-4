@@ -10,14 +10,54 @@ import time
 from naoqi import ALProxy
 import csv
 
+class Appointment:
+    def __init__(self, name, hr, min):
+        self.name = name
+        self.hour = hour
+        self.minute = min
+
+
+def read_csv()
+    with open('schedule.csv', newline='') as f:
+        reader = csv.reader(f)
+        schedule = list(reader)
+        appointmentlist = []
+        for i in range(len(schedule)):
+            name = schedule[i]
+            i = i + 1
+            hour = schedule[i]
+            i = i + 1
+            minute = schedule[i]
+            app = Appointment(name, hour, minute)
+            appointmentlist.append(app)
+        return appointmentlist
+
+
+
 def main(robotIP, PORT=9559):
     """
     This is the basic schedule dialog.
     """
-    
-    with open('schedule.csv', newline='') as f:
-        reader = csv.reader(f)
-        schedule = list(reader)
+    previous_schedule = []
+    current_schedule = []
+
+    while(True):
+        #Get the new schedule
+        previous_schedule = current_schedule
+        current_schedule = read_csv()
+
+        #If the current schedule differs from the old one, update the schedule
+        if current_schedule != previous_schedule:
+            #Check if this is the first time the schedule has been announced, if so, start with a greeting and say the whole schedule
+
+            #Otherwise, say that the schedule has been changed and announce the change
+
+        #Then, compare the current time to the soonest event in the schedule
+        current_time = time.localtime(time.time())
+
+        #If it is time for an event, then announce the event 
+
+
 
     alternate = True
     
