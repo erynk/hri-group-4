@@ -16,6 +16,11 @@ class Appointment:
         self.hour = hour
         self.minute = min
 
+    def getMinutesTilEvent(self, time):
+        time_in_min = time.tm_hour * 60 + time.tm_min
+        app_in_min = int(self.hour) * 60 + int(self.minute)
+        return app_in_min - time_in_min
+
 
 def read_csv()
     with open('schedule.csv', newline='') as f:
@@ -47,6 +52,7 @@ def main(robotIP, PORT=9559):
         current_schedule = read_csv()
         
         alternate = True
+        first_reading = True
     
         animated = ALProxy("ALAnimatedSpeech", robotIP, PORT)
         configuration = {"bodyLanguageMode":"disabled"} 
@@ -64,8 +70,11 @@ def main(robotIP, PORT=9559):
                     animated.say(previous_appointment.name + "at" + previous_appointment.hour + " " + previous_appointment.minute, configuration)
                     animated.say("you have" + current_appointment.name + "at" + current_appointment.hour + " " + current_appointment.minute, configuration)
         else
-             The robot shares the daily schedule
-            animated.say("I am the NAO robot. New items have been uploaded to the schedule", configuration)
+            #The robot shares the daily schedule
+            if first_reading:
+                animated.say("Good Morning. I am the NAO robot. Here is your schedule for today.", configuration)
+            else:
+                animated.say("I am the NAO robot. New items have been uploaded to the schedule", configuration)
             for item in schedule:
                 if config mod 3 == 0:
                     animated.say(item, configuration)
@@ -77,11 +86,15 @@ def main(robotIP, PORT=9559):
                 config = config + 1
         
         #Then, compare the current time to the soonest event in the schedule
+        previous_time = current_time
         current_time = time.localtime(time.time())
 
-        #If it is time for an event, then announce the event 
+        if current_time.tm_min != previous_time.tm_min:
+            for app in Appointment:
+                if app.getMinutesTilEvent == 0:
+                    # If it is time for an event, then announce the event
+                    animated.say("Since it is " + app.hour + " " + app.minutes + " it is time for " + app.name + ". Let's go!", configuration)
 
-    #
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
