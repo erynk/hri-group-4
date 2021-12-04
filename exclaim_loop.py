@@ -66,9 +66,9 @@ def main(robotIP, PORT=9559):
                 current_appointment = current_schedule[i]
                 previous_appointment = previous_schedule[i]
                 if(current_appointment.name != previous_appointment.name or current_appointment.minute != previous_appointment.minute or current_appointment.hour != previous_appointment.hour):
-                    animated.say(" Hello. Your schedule has changed. Instead of", configuration)
-                    animated.say(previous_appointment.name + "at" + previous_appointment.hour + " " + previous_appointment.minute, configuration)
-                    animated.say("you have" + current_appointment.name + "at" + current_appointment.hour + " " + current_appointment.minute, configuration)
+                    animated.say(" Hello. Your schedule has changed. Instead of ", configuration)
+                    animated.say(previous_appointment.name + " at " + previous_appointment.hour + " " + previous_appointment.minute, configuration)
+                    animated.say(" you have " + current_appointment.name + " at " + current_appointment.hour + " " + current_appointment.minute, configuration)
         else
             #The robot shares the daily schedule
             if first_reading:
