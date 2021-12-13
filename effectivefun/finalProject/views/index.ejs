@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Scheduler</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+		<script src="https://kit.fontawesome.com/d9120d3d9b.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<section class="section">
+			<div class="container">
+				<h1 class="title is-1">Robot Scheduler</h1>
+				<h2 class="title is-2">Johnny's Schedule</h2>
+				<p>Add, edit, or remove events.</p>
+				<p>Select "Update Schedule" to send the schedule to the robot.</p>
+				<br/>
+				<form id="scheduleForm" name="scheduleForm" action="" method="post">
+					<div id="inputgroup">
+						<% if (events) { %>
+							<div id="group0" class="field has-addons eventgroup">
+								<div class="control">
+									<input class="input is-expanded event" style="width: 60vw" type ="text" id="event0" name="event0" value="<%- events[0] %>">
+								</div>
+								<div class="control">
+									<input class="input hour" style="width: 60px;" type="text" id="hour0" name="hour0" value="<%- eventsHours[0] %>"> 
+								</div>
+								<div class="control ">
+									<a class="button is-static">
+										:
+									  </a>
+								</div>
+								<div class="control">
+									<input class="input minute" style="width: 60px;" type="text" id="minute0" name="minute0" value="<%- eventsMinutes[0] %>">
+								</div>
+								<div class="control">
+									<button class="button btn-up" type="button" onclick="swapEvents('group0', 'group0');">
+										<span class="icon">
+											<i class="fas fa-arrow-up"></i>
+										</span>
+									</button>
+								</div>									
+								<div class="control">
+									<button class="button btn-down" type="button" onclick="swapEvents('group0', 'group1');">
+										<span class="icon">
+											<i class="fas fa-arrow-down"></i>
+										</span>
+									</button>
+								</div>								
+								<div class="control">
+									<button class="button is-danger btn-delete" type="button" onclick="removeEvent('group0');">
+										<span class="icon">
+											<i class="far fa-trash-alt"></i>
+										</span>
+									</button>
+								</div>
+							</div>
+							<% for (let i = 1; i < events.length; i++) { %>
+								<div id="group<%- i %>" class="field has-addons eventgroup">
+									<div class="control">
+										<input class="input is-expanded event" style="width: 60vw" type ="text" id="event<%- i %>" name="event<%- i %>" value="<%- events[i] %>">
+									</div>
+									<div class="control">
+										<input class="input hour" style="width: 60px;" type="text" id="hour<%- i %>" name="hour<%- i %>" value="<%- eventsHours[i] %>"> 
+									</div>
+									<div class="control ">
+										<a class="button is-static">
+											:
+										  </a>
+									</div>
+									<div class="control">
+										<input class="input minute" style="width: 60px;" type="text" id="minute<%- i %>" name="minute<%- i %>" value="<%- eventsMinutes[i] %>">
+									</div>
+									<div class="control">
+										<button class="button btn-up" type="button" onclick="swapEvents('group<%- (i - 1) %>', 'group<%- i %>');">
+											<span class="icon">
+												<i class="fas fa-arrow-up"></i>
+											</span>
+										</button>
+									</div>									
+									<div class="control">
+										<button class="button btn-down" type="button" onclick="swapEvents('group<%- (i + 1) %>', 'group<%- i %>');">
+											<span class="icon">
+												<i class="fas fa-arrow-down"></i>
+											</span>
+										</button>
+									</div>
+									<div class="control">
+										<button class="button is-danger btn-delete" type="button" onclick="removeEvent('group<%- i %>');">
+											<span class="icon">
+												<i class="far fa-trash-alt"></i>
+											</span>
+										</button>
+									</div>									
+								</div>
+							<%}%>
+						<%} else { %>
+							<div id="group0" class="field has-addons">
+								<div class="control">
+									<input class="input is-expanded event" style="width: 60vw" type ="text" id="event0" name="event0" value="Add new event">
+								</div>
+								<div class="control">
+									<input class="input hour" style="width: 60px;" type="text" id="hour0" name="hour0" value="12"> 
+								</div>
+								<div class="control ">
+									<a class="button is-static">
+										:
+									  </a>
+								</div>
+								<div class="control">
+									<input class="input minute" style="width: 60px;" type="text" id="minute0" name="minute0" value="00">
+								</div>
+								<div class="control">
+									<button class="button btn-up" type="button" onclick="swapEvents('group0', 'group0');">
+										<span class="icon">
+											<i class="fas fa-arrow-up"></i>
+										</span>
+									</button>
+								</div>									
+								<div class="control">
+									<button class="button btn-down" type="button" onclick="swapEvents('group0', 'group1');">
+										<span class="icon">
+											<i class="fas fa-arrow-down"></i>
+										</span>
+									</button>
+								</div>
+								<div class="control">
+									<button class="button is-danger btn-delete" type="button" onclick="removeEvent('group0');">
+										<span class="icon">
+											<i class="far fa-trash-alt"></i>
+										</span>
+									</button>
+								</div>								
+							</div>
+						<%}%>
+					</div>
+					<br/>
+					<div class="field is-grouped">
+						<div class="control">
+							<button class="button is-link" type="submit">Update Schedule</button>
+						</div>
+						<div class="control">
+							<button class="button is-link" id="add-btn" onclick="createEventBox()" type="button">Add new event</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+		<script>
+			function createEventBox() {
+				console.log("add event");
+				const formDiv = document.getElementById('scheduleForm');
+				let count = formDiv.getElementsByClassName('eventgroup').length;
+				const newGroup = document.createElement('div');
+				newGroup.classList.add("field");
+				newGroup.classList.add("has-addons");
+				newGroup.classList.add("eventgroup");
+				newGroup.setAttribute('id','group' + count);
+				newGroup.innerHTML = `<div class="control">
+									<input class="input is-expanded event" style="width: 60vw" type ="text" id="event` + count + `" name="event` + count + `" value="Add new event">
+								</div>
+								<div class="control">
+									<input class="input hour" style="width: 60px;" type="text" id="hour` + count + `" name="hour` + count + `" value="12"> 
+								</div>
+								<div class="control ">
+										<a class="button is-static">
+											:
+										</a>
+								</div>
+								<div class="control minute">
+									<input class="input" style="width: 60px;" type="text" id="minute` + count + `" name="minute` + count + `" value="00">
+								</div>
+								<div class="control">
+									<button class="button btn-up" type="button" onclick="swapEvents('group` + (count - 1) + `', 'group` + count + `');">
+										<span class="icon">
+											<i class="fas fa-arrow-up"></i>
+										</span>
+									</button>
+								</div>
+								<div class="control">
+									<button class="button btn-down" type="button" onclick="swapEvents('group` + (count + 1) + `', 'group` + count + `')">
+										<span class="icon">
+											<i class="fas fa-arrow-down"></i>
+										</span>
+									</button>
+								</div>
+								<div class="control">
+									<button class="button is-danger btn-delete" type="button" onclick="removeEvent('group`+ count + `');">
+										<span class="icon">
+											<i class="far fa-trash-alt"></i>
+										</span>
+									</button>
+								</div>`
+				document.getElementById("inputgroup").appendChild(newGroup);
+			}
+
+			function swapEvents(stay, move) {
+				stayElement = document.getElementById(stay);
+				moveElement = document.getElementById(move);
+				const tempElement = document.createElement('div');
+				tempElement.innerHTML = stayElement.innerHTML;
+				stayElement.innerHTML = moveElement.innerHTML;
+				moveElement.innerHTML = tempElement.innerHTML;
+				changeOrder();
+  			}
+
+			function removeEvent(elem) {
+				const removeElement = document.getElementById(elem);
+				removeElement.parentNode.removeChild(removeElement);
+				changeOrder();
+			}
+
+			function changeOrder() {
+				const eventGroups = document.getElementsByClassName('eventgroup');
+				const eventItems = document.getElementsByClassName('event');
+				const hourItems = document.getElementsByClassName('hour');
+				const minuteItems = document.getElementsByClassName('minute');
+				const upButtons = document.getElementsByClassName('btn-up');
+				const downButtons = document.getElementsByClassName('btn-down');
+				const deleteButtons = document.getElementsByClassName('btn-delete');
+
+				for (let i = 0; i < eventGroups.length; i++) {
+					eventGroups[i].id = 'group' + i;
+					eventItems[i].id = 'event' + i;
+					eventItems[i].setAttribute('name','event' + i);
+					hourItems[i].id = 'hour' + i;
+					hourItems[i].setAttribute('name','hour' + i);
+					minuteItems[i].id = 'minute' + i;
+					minuteItems[i].setAttribute('name','minute' + i);
+					upButtons[i].setAttribute("onclick", "swapEvents('group" + (i - 1) + "', 'group" + i + "');");
+					downButtons[i].setAttribute("onclick", "swapEvents('group" + (i + 1) + "', 'group" + i + "');");
+					deleteButtons[i].setAttribute("onclick", "removeEvent('group" + i + "');");
+				}
+			}
+		</script>
+	</body>
+</html>
+
